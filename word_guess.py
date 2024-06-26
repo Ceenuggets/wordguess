@@ -110,8 +110,24 @@ app.layout = dbc.Container(children=[
         ),
     ], justify="center", className='g-0'),
     dcc.Store(id='stored_data'),
+    dcc.Store(id='store-content', data=None),
 ], fluid=True)
 
+
+app.clientside_callback(
+    """
+    function(value) {
+        var inputElem = document.getElementById('user_input');
+        if (inputElem) {
+            inputElem.focus();
+            inputElem.select();
+        }
+        return value;
+    }
+    """,
+    Output('store-content', 'data'),
+    Input('user_input', 'value')
+)
 
 @app.callback(
     Output("expected_word", "children"),
