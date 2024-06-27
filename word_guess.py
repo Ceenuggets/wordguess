@@ -103,8 +103,7 @@ app.layout = dbc.Container(children=[
                         style={'margin': '10px'},
                         maxLength=1,
                         pattern=".{1,1}",
-                        inputMode="text",
-                        autoCapitalize="none" 
+                       
                     ),
                 ])
             ], id="input_div")
