@@ -102,8 +102,30 @@ app.layout = dbc.Container(children=[
                         # placeholder="Guess a word",
                         style={'margin': '10px'},
                         maxLength=1,
-                        pattern=".{1,1}"
+                        pattern=".{1,1}",
+                        inputMode="text",
+                        autoCapitalize="none" 
                     ),
+                     html.Script("""
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var userInput = document.getElementById('user_input');
+                            if (userInput) {
+                                userInput.setAttribute('autocapitalize', 'none');
+                                
+                                userInput.addEventListener('input', function() {
+                                    if (this.value.length > 1) {
+                                        this.value = this.value.slice(0, 1);
+                                    }
+                                });
+
+                                userInput.addEventListener('keydown', function(event) {
+                                    if (this.value.length >= 1 && event.key.length === 1) {
+                                        event.preventDefault();
+                                    }
+                                });
+                            }
+                        });
+                    """)
                 ])
             ], id="input_div")
         ], xs=12, sm=12, md=8, lg=8, xl=6,
