@@ -101,7 +101,8 @@ app.layout = dbc.Container(children=[
                         type="text",
                         # placeholder="Guess a word",
                         style={'margin': '10px'},
-                        maxLength=1
+                        maxLength=1,
+                        pattern=".{1,1}"
                     ),
                 ])
             ], id="input_div")
