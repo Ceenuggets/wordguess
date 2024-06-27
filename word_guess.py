@@ -24,12 +24,12 @@ class WordGuess:
     def random_word(self):
         random_word = random.choice(self.words)
         self.guessed_word = re.sub(r".", "-", random_word)
-        self.supply_word(random_word.lower())
+        # self.supply_word(random_word.lower())
 
         return random_word
 
-    def supply_word(self, random_word):
-        pass
+    # def supply_word(self, random_word):
+    #     pass
         # print("====================")
         # print(len(self.guessed_word))
         # print(len(random_word))
