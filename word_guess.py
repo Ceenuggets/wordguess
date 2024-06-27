@@ -24,16 +24,7 @@ class WordGuess:
     def random_word(self):
         random_word = random.choice(self.words)
         self.guessed_word = re.sub(r".", "-", random_word)
-        # self.supply_word(random_word.lower())
-
         return random_word
-
-    # def supply_word(self, random_word):
-    #     pass
-        # print("====================")
-        # print(len(self.guessed_word))
-        # print(len(random_word))
-        # print(len(self.chosen_word))
 
 
 def compare_words(current_word, letter):
@@ -87,7 +78,10 @@ app.layout = dbc.Container(children=[
                 ], className='d-flex justify-content-center text-align-center', id="title"),
                 html.Div([
                     html.Div([
-                        html.Span(id="expected_word"),
+                        html.Div([
+                            html.Label("Country:", style={'fontSize': '18px', 'marginRight': '5px', 'fontWeight': 'bold'}),
+                            html.Span(id="expected_word"),
+                        ]),
                         html.Hr(style={"width": "100% !important",  }),
                         html.Span(id="min_expected_guess"),
                         html.Span(id="guessed_letters"),
@@ -157,6 +151,7 @@ def update_output_div(user_input, current_word):
     Output("expected_word", "children",  allow_duplicate=True),
     Output("guessed_letters", "children"),
     Output("num_of_attempts", "children"),
+    Output("expected_word", "style"),
     Input("user_input", "value"),
     State('stored_data', 'data'),
     prevent_initial_call=True,
@@ -176,10 +171,10 @@ def process_user_input(user_input, stored_data):
                 num = 0
                 guess_letters.clear()
                 # print("Hurray, You have answer")
-                return stored_data['current_word'], html.P(["Already guessed: ", html.Span(",".join(guess_letters), className="guessed_letters shared-span-style")]), html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style") ])
+                return stored_data['current_word'], html.P(["Already guessed: ", html.Span(",".join(guess_letters), className="guessed_letters shared-span-style")]), html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': 'green', 'color': 'white', 'boxShadow': '5px 10px 5px rgba(0, 0, 0, 0.4)'}
                 
             else:
-                return guess_outcome, html.P(["Already guessed: ", html.Span(",".join(guess_letters), className="guessed_letters shared-span-style")]), html.P(["Attempts: ", html.Span(str(num),className="attempts shared-span-style") ])
+                return guess_outcome, html.P(["Already guessed: ", html.Span(",".join(guess_letters), className="guessed_letters shared-span-style")]), html.P(["Attempts: ", html.Span(str(num),className="attempts shared-span-style") ]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}
 
             # return guessed_word, f"Already guessed letters: {",".join(guess_letters)}", f"Number of attempts: {num}"
 
