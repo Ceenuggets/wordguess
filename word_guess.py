@@ -171,7 +171,7 @@ def process_user_input(user_input, stored_data):
                 num = 0
                 guess_letters.clear()
                 # print("Hurray, You have answer")
-                return stored_data['current_word'], html.P(["Already guessed: ", html.Span(",".join(guess_letters), className="guessed_letters shared-span-style")]), html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': 'green', 'color': 'white', 'boxShadow': '5px 10px 5px rgba(0, 0, 0, 0.4)'}
+                return stored_data['current_word'], html.P(["Already guessed: ", html.Span(",".join(guess_letters), className="guessed_letters shared-span-style")]), html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': 'green', 'color': 'white', 'boxShadow': '5px 10px 5px rgba(0, 0, 0, 0.4)', 'border': '2px solid white'}
                 
             else:
                 return guess_outcome, html.P(["Already guessed: ", html.Span(",".join(guess_letters), className="guessed_letters shared-span-style")]), html.P(["Attempts: ", html.Span(str(num),className="attempts shared-span-style") ]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}
