@@ -4,12 +4,16 @@ import dash_bootstrap_components as dbc
 import re
 import random
 import pandas as pd
+import os
 
 external_stylesheets = [dbc.themes.BOOTSTRAP, '/assets/word_guess.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets,
                 meta_tags=[{'name': 'viewport', 'content': 'width=device-width, initial-scale=1.0'}])
 
-countries = pd.read_csv("word_guess.csv", encoding="latin-1")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+csv_path = os.path.join(BASE_DIR, 'word_guess.csv')
+countries = pd.read_csv(csv_path, encoding="latin-1")
+# countries = pd.read_csv("word_guess.csv", encoding="latin-1")
 print(countries["Country"])
 random_output = ""
 masked_random_output= ""
