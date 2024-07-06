@@ -10,7 +10,31 @@ background-color: lightgrey;
     align-items: center;
 }
 
+#result{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 2px;
+    box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2);
+}
+
+#capital{
+    position: absolute;
+    bottom: 0;
+    right: 4px;
+    color: lightgray;
+}
 #expected_word {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 2px;
+    margin: 2px 0 10px 0;
+}
+
+/* #expected_word {
     font-size: 36px;
     font-weight: bold;
     border: 1px solid #000;
@@ -22,8 +46,7 @@ background-color: lightgrey;
     letter-spacing: 2px;
     margin: 5px 0 10px 0;
     box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2);
-}
-
+} */
 
 #user_input {
     width: 40px;
