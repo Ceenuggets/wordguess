@@ -3,12 +3,14 @@ from dash import dcc, html, Input, Output, State
 import dash_bootstrap_components as dbc
 import re
 import random
-
+import pandas as pd
 
 external_stylesheets = [dbc.themes.BOOTSTRAP, '/assets/word_guess.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets,
                 meta_tags=[{'name': 'viewport', 'content': 'width=device-width, initial-scale=1.0'}])
 
+countries = pd.read_csv("word_guess.csv", encoding="latin-1")
+print(countries["Country"])
 random_output = ""
 masked_random_output= ""
 num = 0
@@ -38,38 +40,40 @@ def word_screen(input_char):
             print("".join(new_word))
     return masked_random_output
 
+# countries["Country"]
+sample =  countries["Country"].values
+# "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+# "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain",
+# "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+# "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria",
+# "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada",
+# "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros",
+# "Republic of the Congo", "Congo DRC", "Costa Rica", "Ivory Coast",
+# "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica",
+# "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea",
+# "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France",
+# "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala",
+# "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland",
+# "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica",
+# "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan",
+# "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein",
+# "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali",
+# "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia",
+# "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
+# "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
+# "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau",
+# "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland",
+# "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis",
+# "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino",
+# "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles",
+# "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia",
+# "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan",
+# "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand",
+# "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
+# "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates",
+# "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela",
+# "Vietnam", "Yemen", "Zambia", "Zimbabwe"
 
-sample = "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
-"Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain",
-"Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
-"Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria",
-"Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada",
-"Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros",
-"Republic of the Congo", "Congo DRC", "Costa Rica", "Ivory Coast",
-"Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica",
-"Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea",
-"Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France",
-"Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala",
-"Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland",
-"India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica",
-"Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan",
-"Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein",
-"Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali",
-"Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia",
-"Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
-"Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
-"Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau",
-"Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland",
-"Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis",
-"Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino",
-"Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles",
-"Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia",
-"South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan",
-"Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand",
-"Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
-"Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates",
-"United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela",
-"Vietnam", "Yemen", "Zambia", "Zimbabwe"
 
 
 
@@ -147,7 +151,7 @@ def update_output(value, interacted):
     if interacted:
         if match_found:
             random_output, masked_random_output = random_pick(sample)
-            return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(random_output), className="min-attempts shared-span-style")]),html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}
+            return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]),html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}
         if pattern.match(value):
             num += 1
             guessed_letters.update(value.lower())
@@ -157,15 +161,15 @@ def update_output(value, interacted):
                 # print("Yes, you've got the answer!")
                 print(num)
                 print(guessed_letters)
-                return random_output, html.P(["Minimum expected guesses: ", html.Span(len(random_output), className="min-attempts shared-span-style")]),html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': 'green', 'color': 'white', 'boxShadow': '5px 10px 5px rgba(0, 0, 0, 0.4)', 'border': '2px solid white'}
+                return random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]),html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': 'green', 'color': 'white', 'boxShadow': '5px 10px 5px rgba(0, 0, 0, 0.4)', 'border': '2px solid white'}
             else:
-                return guess_outcome, html.P(["Minimum expected guesses: ", html.Span(len(random_output), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}
+                return guess_outcome, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}
         else:
-            return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(random_output), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}
+            return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}
     else:
         random_output, masked_random_output = random_pick(sample)
         # masked_random_output = re.sub(r".", "-", random_output)
-        return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(random_output), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span("-", className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}
+        return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span("-", className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}
 
 
 app.clientside_callback(
