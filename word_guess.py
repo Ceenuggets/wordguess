@@ -147,7 +147,6 @@ def update_output(value, interacted):
 app.clientside_callback(
     """
     function(value) {
-        window.scrollTo(0, 0);
         var inputElem = document.getElementById('user_input');
         if (inputElem) {
             inputElem.focus();
