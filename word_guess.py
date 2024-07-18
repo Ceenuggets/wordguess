@@ -143,7 +143,12 @@ def update_output(value, interacted):
         # masked_random_output = re.sub(r".", "-", random_output)
         return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span("-", className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}, ""
 
-
+@app.callback(
+    Output('user_input', 'value'),
+    Input('user_input', 'value')
+)
+def enforce_max_length(value):
+    return value[:1]
 
 app.clientside_callback(
     """
