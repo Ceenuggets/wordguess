@@ -147,7 +147,6 @@ def update_output(value, interacted):
 app.clientside_callback(
     """
     function(value) {
-        document.body.style.position = 'fixed';
         window.scrollTo(0, 0);
         var inputElem = document.getElementById('user_input');
         if (inputElem) {
