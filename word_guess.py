@@ -84,7 +84,7 @@ app.layout = dbc.Container(children=[
         ], xs=12, sm=12, md=8, lg=8, xl=6,
             className="mx-auto"
         ),
-    ], justify="center", className='g-0'),
+    ], justify="center", className='g-0 mb-0'),
     dcc.Store(id='input_interacted', data=False),
     dcc.Store(id='store-content', data=None),
 ], fluid=True)
