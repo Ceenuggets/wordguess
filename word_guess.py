@@ -59,9 +59,15 @@ app.layout = dbc.Container(children=[
                         html.Label("Country:", 
                                    style={'fontSize': '18px', 'marginRight': '5px', 'fontWeight': 'bold', 'display': 'inline-block'}),
                         html.Div([
+                            html.Div([
                             html.Span(id="expected_word"),
                             html.Span(id="capital"),
                         ], id="result"),
+                            html.Div([
+                                html.Img(id="flag")
+                            ], id="country_flag"),
+                        ],id="result_flag"),
+                    
                         html.Hr(style={"width": "100% !important", }),
                         html.Span(id="min_expected_guess"),
                         html.Span(id="guessed_letters"),
@@ -84,7 +90,7 @@ app.layout = dbc.Container(children=[
         ], xs=12, sm=12, md=8, lg=8, xl=6,
             className="mx-auto"
         ),
-    ], justify="center", className='g-0 mb-0'),
+    ], justify="center", className='g-0'),
     dcc.Store(id='input_interacted', data=False),
     dcc.Store(id='store-content', data=None),
 ], fluid=True)
@@ -110,6 +116,7 @@ def track_input_interaction(value, interacted):
     Output("num_of_attempts", "children"),
     Output("result", "style"),
     Output("capital", "children"),
+    Output("flag", "src"),
     [Input('user_input', 'value'),
      Input('input_interacted', 'data')]
 )
@@ -122,7 +129,7 @@ def update_output(value, interacted):
     if interacted:
         if match_found:
             random_output, masked_random_output = random_pick(sample)
-            return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]),html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}, ""
+            return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]),html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}, "",""
         if pattern.match(value):
             num += 1
             guessed_letters.update(value.lower())
@@ -133,15 +140,15 @@ def update_output(value, interacted):
                 print(num)
                 print(guessed_letters)
                 print(countries[random_output])
-                return random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]),html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': 'green', 'color': 'white', 'boxShadow': '5px 10px 5px rgba(0, 0, 0, 0.4)', 'border': '2px solid white'}, countries[random_output]
+                return random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]),html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': 'green', 'color': 'white', 'boxShadow': '5px 10px 5px rgba(0, 0, 0, 0.4)', 'border': '2px solid white'}, countries[random_output], f"/assets/flags/{random_output}.gif"
             else:
-                return guess_outcome, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}, ""
+                return guess_outcome, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]),{'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}, "",""
         else:
-            return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}, ""
+            return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span(",".join(guessed_letters), className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}, "",""
     else:
         random_output, masked_random_output = random_pick(sample)
         # masked_random_output = re.sub(r".", "-", random_output)
-        return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span("-", className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}, ""
+        return masked_random_output, html.P(["Minimum expected guesses: ", html.Span(len(set(random_output)), className="min-attempts shared-span-style")]), html.P(["Already guessed: ", html.Span("-", className="guessed_letters shared-span-style")]),html.P(["Attempts: ", html.Span(str(num), className="attempts shared-span-style")]), {'backgroundColor': '#f0f0f0', 'color': 'black', 'boxShadow': 'box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2)'}, "",""
 
 
 app.clientside_callback(

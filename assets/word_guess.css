@@ -11,6 +11,13 @@ margin-bottom: 0;
     align-items: center;
 }
 
+#result_flag{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 #result{
     position: relative;
     display: flex;
@@ -19,6 +26,8 @@ margin-bottom: 0;
     border-radius: 5px;
     padding: 2px;
     box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
+    margin-right: 10px;
 }
 
 #capital{
@@ -82,6 +91,18 @@ margin-bottom: 0;
     margin-top: 2px;
 }
 
+#country_flag{
+    margin-bottom: 2px;
+    box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+#flag{
+    border-radius: 5px;
+    border: 1px solid;
+    /* width: 80px;
+    height: 60px; */
+}
 #title{
     width: 100%;
     background-color: black;
